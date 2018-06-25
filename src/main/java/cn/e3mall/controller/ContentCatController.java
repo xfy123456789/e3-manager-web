@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
  * @version 1.0
  */
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.e3mall.common.pojo.EasyUITreeNode;
+import cn.e3mall.common.util.E3Result;
 import cn.e3mall.content.service.ContentCategoryService;
 @Controller
 public class ContentCatController {
@@ -27,5 +29,11 @@ public class ContentCatController {
 	public List<EasyUITreeNode> getContentCatList(@RequestParam(name="id",defaultValue="0") Long parentId){
 		List<EasyUITreeNode> list= contentCategoryService.getContentCatList(parentId);
 		return list;
+	}
+	@RequestMapping(value="/content/category/create",method=RequestMethod.POST)
+	@ResponseBody
+	public E3Result createContentCategory(Long parentId,String name) {
+		E3Result e3Result= contentCategoryService.addContentCategory(parentId, name);
+		return e3Result;
 	}
 }
